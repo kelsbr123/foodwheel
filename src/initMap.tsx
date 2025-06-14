@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import {useState } from "react";
 
 function fetchPlaces(setPlaces: any, loading: boolean, setLoading: any, radius = 20000, resultCount = 10) {
         console.log(resultCount)
         console.log(loading)
         navigator.geolocation.getCurrentPosition(async (position) => {
+            //@ts-ignore
             const { Place, SearchNearbyRankPreference } = await google.maps.importLibrary("places") as google.maps.PlacesLibrary;
 
             let lat: number = position.coords.latitude;
@@ -22,7 +23,7 @@ function fetchPlaces(setPlaces: any, loading: boolean, setLoading: any, radius =
             };
 
 
-            const { places } = await Place.nearbySearch(request);
+            const { places } = await Place.searchNearby(request);
             setPlaces(places)
             setLoading(false)
         }
@@ -44,6 +45,9 @@ function PlaceForm(setPlaces: any, loading: boolean, setLoading: any) {
 
         const formData = new FormData(e.target);
         const formJson = Object.fromEntries(formData.entries())
+
+        console.log(radius)
+        console.log(resultCount)
 
         setLoading(true)
         fetchPlaces(setPlaces, loading, setLoading, Number(formJson.radius)*1609.34, Number(formJson.resultCount))

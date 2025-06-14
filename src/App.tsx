@@ -1,8 +1,7 @@
 import './App.css'
 import {fetchPlaces, PlaceForm} from './initMap'
 import {SelectPlace, BuildList} from './selectPlace'
-import React from 'react'
-import { useEffect, useState } from 'react'
+import {useState } from 'react'
 
 function App() {
   const [places, setPlaces] = useState("")
@@ -21,7 +20,7 @@ function App() {
           setSelecting(true)
           SelectPlace(places, setPlaceList, setSelecting);
         }}
-        disabled={true}>
+        disabled={selecting}>
           Pick a restaurant for me
         </button>
       </div>
